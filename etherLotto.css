@@ -1,0 +1,32 @@
+/*title_CSS*/
+#title{
+    height : 40px;
+    display : flex;
+    align-items: center;
+    justify-content: center;
+    background-color : #e5e5e5;
+}
+.tltItem{
+    width : 120px;
+    height : 30px;
+    text-align : center;
+    cursor : pointer;
+    margin-top : auto;
+    border-radius : 5px 5px 0px 0px;
+}
+
+/*Introduce*/
+.Int_name{
+    text-align : center;
+}
+#Int_play{
+    width : 400px;
+    height : 400px;
+    display : flex;
+    margin : auto;
+}
+
+/*ether_Lotto*/
+
+
+/*resultPage*/
