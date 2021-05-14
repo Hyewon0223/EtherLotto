@@ -30,3 +30,23 @@
 
 
 /*resultPage*/
+#Res_screen{
+    text-align: center;
+}
+.Res_result{
+    background-color: lightgray;
+    text-align: center;
+    height: auto;
+    padding: 8px;
+    width: 300px;
+    margin: 0 auto;
+
+}
+.Res_num{
+    background-color: lightyellow;
+    border-radius: 50%;
+}
+#Res_table{
+    margin: 0 auto;
+    text-align: center;
+}

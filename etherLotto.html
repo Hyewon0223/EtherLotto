@@ -4,17 +4,94 @@
     <link rel="stylesheet" href="etherLotto.css">
     <title>EtherLotto</title>
     <script src='node_modules/web3/dist/web3.min.js'/>
-        <!-- <script type="text/javascript" src="abilist.js">  </script> -->
-        <script type="text/javascript">
+    <!-- <script type="text/javascript" src="abilist.js">  </script> -->
+    <script type="text/javascript">
 
-        </script>
-    </head>
+    </script>
+</head>
 
-    <body>
-        <div id="title">
-            <div class="tltItem" onclick="location.href='introduce.html'">소개 영상</div>
-            <div class="tltItem" style="background-color:white">구매하기</div>
-            <div class="tltItem" onclick="location.href='resultPage.html'">당첨 결과</div>
+<body>
+    <div id="title">
+        <div class="tltItem" onclick="location.href='introduce.html'">소개 영상</div>
+        <div class="tltItem" style="background-color:white">구매하기</div>
+        <div class="tltItem" onclick="location.href='resultPage.html'">당첨 결과</div>
+    </div>
+
+    <div id="Buy_screen">
+        <div>
+            # 이용안내<br>
+            - 한 사람당 한 회 한 번의 기회가 있으며, 같은 사람이 여러 번 응모할 수 없습니다.<br>
+            - 현금이 아닌 이더(either)로 구매 가능합니다.<br>
+            - 3개의 번호로 게임에 응모할 수 있으며, 번호 선택 전 자동 또는 수동을 선택해야 합니다.<br>
+            - 수동 선택시 : 1부터 20까지의 숫자 중 3개의 번호를 직접 선택할 수 있습니다.<br>
+            - 자동 선택시 : 임의로 3개의 번호가 선택됩니다.<br>
+            - 100이더가 모이면 자동으로 회당 회차가 종료됩니다.<br><br>
         </div>
-    </body>
+        <h3>제 1회 이더로또</h3>
+        <div>
+            <div>
+                <label><input type="radio" name="mode" value="auto" checked> 자동 </label>
+                <label><input type="radio" name="mode" value="manual"> 수동 </label>
+            </div>
+            <div>
+                <input type="checkbox" name="num" value="1" onclick="getCheckboxValue()"/> 1
+                <input type="checkbox" name="num" value="2"/> 2
+                <input type="checkbox" name="num" value="3"/> 3
+                <input type="checkbox" name="num" value="4"/> 4
+                <input type="checkbox" name="num" value="5"/> 5 <br>
+                <input type="checkbox" name="num" value="6"/> 6
+                <input type="checkbox" name="num" value="7"/> 7
+                <input type="checkbox" name="num" value="8"/> 8
+                <input type="checkbox" name="num" value="9"/> 9
+                <input type="checkbox" name="num" value="10"/> 10 <br>
+                <input type="checkbox" name="num" value="11"/> 11
+                <input type="checkbox" name="num" value="12"/> 12
+                <input type="checkbox" name="num" value="13"/> 13
+                <input type="checkbox" name="num" value="14"/> 14
+                <input type="checkbox" name="num" value="15"/> 15 <br>
+                <input type="checkbox" name="num" value="16"/> 16
+                <input type="checkbox" name="num" value="17"/> 17
+                <input type="checkbox" name="num" value="18"/> 18
+                <input type="checkbox" name="num" value="19"/> 19
+                <input type="checkbox" name="num" value="20"/> 20 <br>
+
+                <input type="button" value="제출하기" onclick="getCheckboxValue()"/>
+                <script>
+                    function getCheckboxValue(message) {
+                        let mode = "auto";
+                        if (document.getElementsByName("mode")[1].checked) mode = "manual";
+
+                        let userChoice = [];
+                        if (mode === "manual") {
+                            let obj_length = document.getElementsByName("num").length;
+                            for (let i = 0; i < obj_length; i++) {
+                                let number = document.getElementsByName("num")[i]
+                                if (number.checked) {
+                                    userChoice.push(number.value);
+                                }
+                            }
+
+                            if (userChoice.length !== 3) {
+                                alert("3개를 골라주세요!");
+                                console.log("현재 선택한 숫자의 수 : ", userChoice.length);
+                            } else {
+                                console.log("수동",userChoice);
+                            }
+                        }
+                        else { //auto일 때
+                            let randomNum;
+                            while(userChoice.length !== 3){
+                                randomNum = Math.floor(Math.random() * 20 + 1)
+                                if (userChoice.indexOf(randomNum) === -1) { // 해당 숫자가 리스트에 없다면
+                                    userChoice.push(randomNum); // 리스트에 숫자 넣기 -> 정렬 기능 추가하고 싶음 userChoice.sort()
+                                }
+                            }
+                            console.log("자동",userChoice);
+                        }
+                    }
+                </script>
+            </div>
+        </div>
+    </div>
+</body>
 </html>
