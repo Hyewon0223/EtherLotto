@@ -27,14 +27,36 @@
 }
 
 /*ether_Lotto*/
+#Buy_screen{
+    text-align : center;
+    margin-top : 20px;
 
+}
+#Buy_proDiv{
+    margin-bottom : 20px;
+}
+#Buy_selectDiv{
+    background: #e5e5e5;
+    width : 400px;
+    margin : auto;
+}
+.Buy_select{
+}
+#Buy_choose{
+    margin : auto;
+}
+#Buy_submit{
+    margin-top : 10px;
+    margin-bottom : 10px;
+}
 
 /*resultPage*/
 #Res_screen{
     text-align: center;
+    margin-top : 20px;
 }
 .Res_result{
-    background-color: lightgray;
+    background-color: #e5e5e5;
     text-align: center;
     height: auto;
     padding: 8px;
@@ -43,10 +65,15 @@
 
 }
 .Res_num{
-    background-color: lightyellow;
+    background-color: #e5e5e5;
     border-radius: 50%;
 }
 #Res_table{
     margin: 0 auto;
     text-align: center;
+}
+
+/**/
+.space{
+    height : 10px;
 }
