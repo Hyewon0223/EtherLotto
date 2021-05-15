@@ -6,11 +6,6 @@
     <script src='node_modules/web3/dist/web3.min.js'/>
     <!-- <script type="text/javascript" src="abilist.js">  </script> -->
     <script type="text/javascript">
-        let btn = document.getElementById("Buy_submit");
-        btn.addEventListener('click', fund);
-        btn = document.getElementById("Buy_nowProBtn");
-        btn.addEventListener('click', nowProgress);
-
         function getCheckboxValue(message) {
             let mode = "auto";
             if (document.getElementsByName("mode")[1].checked) mode = "manual";
@@ -68,39 +63,48 @@
             - 100이더가 모이면 자동으로 회당 회차가 종료됩니다.<br><br>
         </div>
         <h3>제 1회 이더로또</h3>
-        <div>
-            현재 진행률
-            <button id="Buy_nowProBtn" onclick="nowProgress()">Click</button>
-            <progress id="Buy_nowPro" value="0" max="100"/>
+        <div id="Buy_proDiv">
+        현재 진행률
+        <button id="Buy_nowProBtn" onclick="nowProgress()">Click</button>
+        <progress id="Buy_nowPro" value="0" max="100"></progress>
+        <span id="Buy_percent"></span>
         </div>
-        <div>
-            <div>
+        <div id="Buy_selectDiv">
+            <div class="Buy_select">
+                <div class="space"></div>
                 <label><input type="radio" name="mode" value="auto" checked> 자동 </label>
                 <label><input type="radio" name="mode" value="manual"> 수동 </label>
             </div>
-            <div>
-                <input type="checkbox" name="num" value="1"/> 1
-                <input type="checkbox" name="num" value="2"/> 2
-                <input type="checkbox" name="num" value="3"/> 3
-                <input type="checkbox" name="num" value="4"/> 4
-                <input type="checkbox" name="num" value="5"/> 5 <br>
-                <input type="checkbox" name="num" value="6"/> 6
-                <input type="checkbox" name="num" value="7"/> 7
-                <input type="checkbox" name="num" value="8"/> 8
-                <input type="checkbox" name="num" value="9"/> 9
-                <input type="checkbox" name="num" value="10"/> 10 <br>
-                <input type="checkbox" name="num" value="11"/> 11
-                <input type="checkbox" name="num" value="12"/> 12
-                <input type="checkbox" name="num" value="13"/> 13
-                <input type="checkbox" name="num" value="14"/> 14
-                <input type="checkbox" name="num" value="15"/> 15 <br>
-                <input type="checkbox" name="num" value="16"/> 16
-                <input type="checkbox" name="num" value="17"/> 17
-                <input type="checkbox" name="num" value="18"/> 18
-                <input type="checkbox" name="num" value="19"/> 19
-                <input type="checkbox" name="num" value="20"/> 20 <br>
-
-                <input type="button" id="Buy_submit" value="제출하기" onclick="getCheckboxValue()"/>
+            <div class="Buy_select">
+                <table id="Buy_choose"><tb><tr>
+                        <td><input type="checkbox" name="num" value="1"/> 1</td>
+                        <td><input type="checkbox" name="num" value="2"/> 2</td>
+                        <td><input type="checkbox" name="num" value="3"/> 3</td>
+                        <td><input type="checkbox" name="num" value="4"/> 4</td>
+                        <td><input type="checkbox" name="num" value="5"/> 5</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="num" value="6"/> 6</td>
+                        <td><input type="checkbox" name="num" value="7"/> 7</td>
+                        <td><input type="checkbox" name="num" value="8"/> 8</td>
+                        <td><input type="checkbox" name="num" value="9"/> 9</td>
+                        <td><input type="checkbox" name="num" value="10"/> 10</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="num" value="11"/> 11</td>
+                        <td><input type="checkbox" name="num" value="12"/> 12</td>
+                        <td><input type="checkbox" name="num" value="13"/> 13</td>
+                        <td><input type="checkbox" name="num" value="14"/> 14</td>
+                        <td><input type="checkbox" name="num" value="15"/> 15</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="num" value="16"/> 16</td>
+                        <td><input type="checkbox" name="num" value="17"/> 17</td>
+                        <td><input type="checkbox" name="num" value="18"/> 18</td>
+                        <td><input type="checkbox" name="num" value="19"/> 19</td>
+                        <td><input type="checkbox" name="num" value="20"/> 20</td>
+                    </tr></tb></table>
+                <input type="button" id="Buy_submit" value="제출하기" onclick="getCheckboxValue()"/><br>
                 <script>
                     function getCheckboxValue(message) {
                         let mode = "auto";
@@ -137,6 +141,7 @@
 
                     function nowProgress() {
                         document.getElementById('Buy_nowPro').value = '80';
+                        document.getElementById('Buy_percent').innerHTML = document.getElementById('Buy_nowPro').value+'%';
                     }
                 </script>
             </div>
