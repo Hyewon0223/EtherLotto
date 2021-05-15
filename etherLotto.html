@@ -6,7 +6,47 @@
     <script src='node_modules/web3/dist/web3.min.js'/>
     <!-- <script type="text/javascript" src="abilist.js">  </script> -->
     <script type="text/javascript">
+        let btn = document.getElementById("Buy_submit");
+        btn.addEventListener('click', fund);
+        btn = document.getElementById("Buy_nowProBtn");
+        btn.addEventListener('click', nowProgress);
 
+        function getCheckboxValue(message) {
+            let mode = "auto";
+            if (document.getElementsByName("mode")[1].checked) mode = "manual";
+
+            let userChoice = [];
+            if (mode === "manual") {
+                let obj_length = document.getElementsByName("num").length;
+                for (let i = 0; i < obj_length; i++) {
+                    let number = document.getElementsByName("num")[i]
+                    if (number.checked) {
+                        userChoice.push(number.value);
+                    }
+                }
+
+                if (userChoice.length !== 3) {
+                    alert("3개를 골라주세요!");
+                    console.log("현재 선택한 숫자의 수 : ", userChoice.length);
+                } else {
+                    console.log("수동",userChoice);
+                }
+            }
+            else { //auto일 때
+                let randomNum;
+                while(userChoice.length !== 3){
+                    randomNum = Math.floor(Math.random() * 20 + 1)
+                    if (userChoice.indexOf(randomNum) === -1) { // 해당 숫자가 리스트에 없다면
+                        userChoice.push(randomNum); // 리스트에 숫자 넣기 -> 정렬 기능 추가하고 싶음 userChoice.sort()
+                    }
+                }
+                console.log("자동",userChoice);
+            }
+        }
+
+        function nowProgress() {
+            document.getElementById('Buy_nowPro').value = '80';
+        }
     </script>
 </head>
 
@@ -29,12 +69,17 @@
         </div>
         <h3>제 1회 이더로또</h3>
         <div>
+            현재 진행률
+            <button id="Buy_nowProBtn" onclick="nowProgress()">Click</button>
+            <progress id="Buy_nowPro" value="0" max="100"/>
+        </div>
+        <div>
             <div>
                 <label><input type="radio" name="mode" value="auto" checked> 자동 </label>
                 <label><input type="radio" name="mode" value="manual"> 수동 </label>
             </div>
             <div>
-                <input type="checkbox" name="num" value="1" onclick="getCheckboxValue()"/> 1
+                <input type="checkbox" name="num" value="1"/> 1
                 <input type="checkbox" name="num" value="2"/> 2
                 <input type="checkbox" name="num" value="3"/> 3
                 <input type="checkbox" name="num" value="4"/> 4
@@ -55,7 +100,7 @@
                 <input type="checkbox" name="num" value="19"/> 19
                 <input type="checkbox" name="num" value="20"/> 20 <br>
 
-                <input type="button" value="제출하기" onclick="getCheckboxValue()"/>
+                <input type="button" id="Buy_submit" value="제출하기" onclick="getCheckboxValue()"/>
                 <script>
                     function getCheckboxValue(message) {
                         let mode = "auto";
@@ -88,6 +133,10 @@
                             }
                             console.log("자동",userChoice);
                         }
+                    }
+
+                    function nowProgress() {
+                        document.getElementById('Buy_nowPro').value = '80';
                     }
                 </script>
             </div>
