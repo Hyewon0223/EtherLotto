@@ -14,7 +14,7 @@ contract EtherLotto {
 	uint public deadline;		// 마감일 (UnixTime)
 	string public status;		// 모금활동 상태
 	bool public ended;			// 모금 종료여부
-	uint public goalAmount  = 30000000000000000000;		// 목표액
+	uint public goalAmount  = 30000000000000000000;		// 목표액 = 30 ether
 	uint public totalAmount;	// 총 투자액
     mapping (uint => Player) public players;	// 투자자 관리를 위한 매핑
 
@@ -79,45 +79,33 @@ contract EtherLotto {
 			// 컨트랙트 소유자에게 컨트랙트에 있는 모든 이더를 송금
 	        ended = true;
             randNum = generateRandomNumber();	// 난수 생성
-            
+            randNum = randNum % 20 + 1;
             for(uint i=0; i<numInvestors; i++){
                 if(winningNum == players[i].nums){
                    winnerAddress.push(players[i].addr);
                    numWinner++;
                 }
             }
-            shareMoney();
-            // winner.transfer(address(this).balance); // winner가 1명일때 송금
-            //players = new address players [](0); // 초기화
             
-    //         for (uint j=0;j<numWinner;j++) {
-				// if(!winnerAddress[j].send(10 ether)) {
-				// 	revert();
-			 //   }
-			    
-	   //     }
+            for (uint j=0;j<numWinner;j++) {
+        		if(!winnerAddress[j].send(totalAmount/numWinner)) {
+        			revert();
+        	    }
+	        }
 		} else {	// 모금 실패인 경우
 			uint i = 0;
 			status = "Failed";
 			ended = true;
 			
 			// 각 투자자에게 투자금을 돌려줌
-			while(i <= numInvestors) {
+			for (uint i=0;i<numInvestors;i++){
 				if(!players[i].addr.send(players[i].amount)) {
 					revert();
 				}
-				i++;
 			}
 		}
 	}
 	
-	function shareMoney() payable public {
-	    for (uint j=0;j<numWinner;j++) {
-    		if(!winnerAddress[j].send(totalAmount/numWinner)) {
-    			revert();
-    	    }
-	    }
-	}
 	
 	/// 컨트랙트를 소멸시키기 위한 함수
 	function kill() public onlyOwner {
@@ -131,10 +119,6 @@ contract EtherLotto {
 	// 당첨 숫자 뽑기
 	function generateRandomNumber() public view returns (uint) {
         return uint(keccak256(abi.encodePacked(block.timestamp, block.difficulty, numInvestors)));
-    }
-	
-	function pickWinner() public onlyOwner {
-
     }
 	
 }
