@@ -10,6 +10,7 @@
         var contractInstance = null;
         var resultbox = null;
 
+
         window.addEventListener("scroll", () => {
             if (window.scrollY >= 730) {
                 document.querySelectorAll(".tltItem")[0].style.backgroundColor = '#e5e5e5';
@@ -32,14 +33,17 @@
             etherLotto();
         });
 
+        window.addEventListener('load', etherLotto);
 
         async function etherLotto() {
             if (window.ethereum){
                 window.accouts = await ethereum.request({method: 'eth_requestAccounts'});
-                getEtherLottoInstance();
+                console.log("a");
+                // getEtherLottoInstance();
             }
             else if (window.web3) {
                 window.web3 = new Web3(web3.currentProvider);
+                console.log("b");
             }
             else {
                 console.log('Non-Ethereum browser detected. You should consider trying MetaMask!');
@@ -47,11 +51,11 @@
             }
         }
 
-        async function getEtherLottoInstance() {
-            window.web3 = new Web3(window.ethereum); // window.ethereum 객체를 파라미터로 해서 새로운 web3 객체 생
-            contractInstance = await new window.web3.eth.Contract(abiobj, address);
-            registerEventHandlers();
-        }
+        // async function getEtherLottoInstance() {
+        //     window.web3 = new Web3(window.ethereum); // window.ethereum 객체를 파라미터로 해서 새로운 web3 객체 생
+        //     contractInstance = await new window.web3.eth.Contract(abiobj, address);
+        //     registerEventHandlers();
+        // }
 
         function registerEventHandlers() {
             // let btn = document.getEle
@@ -61,7 +65,7 @@
 
 <body>
     <div id="title">
-        <a href="#Introduce_screen"><div class="tltItem"><a href="#Introduce_screen">소개 영상</div></a>
+        <div class="tltItem"><a href="#Introduce_screen">소개 영상</a></div>
         <div class="tltItem"><a href="#Buy_screen">구매하기</a></div>
         <div class="tltItem"><a href="#Res_screen">당첨 결과</a></div>
     </div>
