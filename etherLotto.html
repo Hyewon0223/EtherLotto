@@ -3,14 +3,12 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="etherLotto.css">
     <title>EtherLotto</title>
-    <script src='node_modules/web3/dist/web3.min.js'/>
-     <script type="text/javascript" src="abilist.js">  </script>
+    <script src='node_modules/web3/dist/web3.min.js'></script>
     <script type="text/javascript">
-        var accounts = null;
-        var contractInstance = null;
-        var resultbox = null;
-
-
+        window.addEventListener('load', () => {
+            document.querySelectorAll(".tltItem")[0].style.backgroundColor = "white";
+            etherLotto();
+        });
         window.addEventListener("scroll", () => {
             if (window.scrollY >= 730) {
                 document.querySelectorAll(".tltItem")[0].style.backgroundColor = '#e5e5e5';
@@ -28,22 +26,23 @@
                 document.querySelectorAll(".tltItem")[2].style.backgroundColor = '#e5e5e5';
             }
         });
-        window.addEventListener('load', () => {
-            document.querySelectorAll(".tltItem")[0].style.backgroundColor = "white";
-            etherLotto();
-        });
+
+        // 연결
+        var accounts = null;
+        var contractInstance = null;
+        var resultbox = null;
 
         window.addEventListener('load', etherLotto);
 
         async function etherLotto() {
             if (window.ethereum){
                 window.accouts = await ethereum.request({method: 'eth_requestAccounts'});
-                console.log("a");
-                // getEtherLottoInstance();
+                console.log('Modern dapp browsers');
+                getEtherLottoInstance();
             }
             else if (window.web3) {
                 window.web3 = new Web3(web3.currentProvider);
-                console.log("b");
+                console.log('Legacy dapp browsers');
             }
             else {
                 console.log('Non-Ethereum browser detected. You should consider trying MetaMask!');
@@ -51,15 +50,362 @@
             }
         }
 
-        // async function getEtherLottoInstance() {
-        //     window.web3 = new Web3(window.ethereum); // window.ethereum 객체를 파라미터로 해서 새로운 web3 객체 생
-        //     contractInstance = await new window.web3.eth.Contract(abiobj, address);
-        //     registerEventHandlers();
-        // }
+        async function getEtherLottoInstance() {
+            var address = "0xf8e81D47203A594245E36C48e151709F0C19fBe8"
+            var abiobj = [
+                {
+                    "inputs": [],
+                    "name": "kill",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "pickWinner",
+                    "outputs": [],
+                    "stateMutability": "payable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "playerNum",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "purchase",
+                    "outputs": [],
+                    "stateMutability": "payable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "_duration",
+                            "type": "uint256"
+                        }
+                    ],
+                    "stateMutability": "nonpayable",
+                    "type": "constructor"
+                },
+                {
+                    "inputs": [],
+                    "name": "alreadyState",
+                    "outputs": [
+                        {
+                            "internalType": "bool",
+                            "name": "",
+                            "type": "bool"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "deadline",
+                    "outputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "ended",
+                    "outputs": [
+                        {
+                            "internalType": "bool",
+                            "name": "",
+                            "type": "bool"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "getBalance",
+                    "outputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "address",
+                            "name": "InputAddress",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "getMyNum",
+                    "outputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "getRandomNumber",
+                    "outputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "goalAmount",
+                    "outputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "numPlayers",
+                    "outputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "numWinner",
+                    "outputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "owner",
+                    "outputs": [
+                        {
+                            "internalType": "address payable",
+                            "name": "",
+                            "type": "address"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "players",
+                    "outputs": [
+                        {
+                            "internalType": "address payable",
+                            "name": "addr",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "nums",
+                            "type": "uint256"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "randNum",
+                    "outputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "round",
+                    "outputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "status",
+                    "outputs": [
+                        {
+                            "internalType": "string",
+                            "name": "",
+                            "type": "string"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "totalAmount",
+                    "outputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "winnerAddress",
+                    "outputs": [
+                        {
+                            "internalType": "address payable",
+                            "name": "",
+                            "type": "address"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "winningNum",
+                    "outputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                }
+            ]
+            window.web3 = new Web3(window.ethereum); // window.ethereum 객체를 파라미터로 해서 새로운 web3 객체 생성
+            contractInstance = await new window.web3.eth.Contract(abiobj, address);
+            console.log(contractInstance);
+            registerEventHandlers();
+        }
 
         function registerEventHandlers() {
-            // let btn = document.getEle
+            let btn = document.getElementById("Buy_nowProBtn");
+            btn.addEventListener('click',showProcess);
+
+            btn = document.getElementById("Buy_stateBtn");
+            btn.addEventListener('click', showState);
+
+            btn = document.getElementById("Buy_submit");
+            btn.addEventListener('click', submitClick);
+
+            btn = document.getElementById("Res_checkBtn");
+            btn.addEventListener('click',checkWinningNum);
+
+            btn = document.getElementById("Res_getMyNumBtn");
+            btn.addEventListener('click',getMyNum);
         }
+
+        async function showProcess(){
+            if (contractInstance != null) {
+                 try {
+                     let value = await contractInstance.methods["totalAmount"]().call();
+                     document.getElementById('Buy_nowPro').value = value;
+                     document.getElementById('Buy_percent').innerHTML = value + '%';
+                 }
+                 catch (error) {
+                     console.log('[showProcess error]', error)
+                 }
+            }
+        }
+
+        async function showState(){
+            if (contractInstance != null) {
+                try {
+                    let value = await contractInstance.methods["state"]().call();
+                    document.getElementById('Buy_state').innerHTML = value;
+                }
+                catch (error) {
+                    console.log('[showProcess error]', error)
+                }
+            }
+        }
+
+        async function  submitClick(){
+            if (contractInstance != null){
+                try {
+                    let num = getCheckboxValue();
+                    console.log(accounts[0]);
+                    let value = await contractInstance.methods.purchase(num).send({from:accounts[0], value:10000000000000000000});
+                    console.log(value);
+                }
+                catch(error) {
+                    console.log('[submit error]',error);
+                }
+            }
+        }
+
+        async function checkWinningNum() {
+
+        }
+
+        async function getMyNum(){
+
+        }
+
     </script>
 </head>
 
@@ -89,12 +435,19 @@
             - 100이더가 모이면 자동으로 회당 회차가 종료됩니다.<br><br>
         </div>
         <h3>제 1회 이더로또</h3>
-        <div id="Buy_proDiv">
-        현재 진행률
-        <button id="Buy_nowProBtn" onclick="nowProgress()">Click</button>
-        <progress id="Buy_nowPro" value="0" max="100"></progress>
-        <span id="Buy_percent"></span>
-        </div>
+        <table>
+            <tbody>
+                <tr id="Buy_proDiv">
+                    <td><button id="Buy_nowProBtn">현재 진행률</button></td>
+                    <td><progress id="Buy_nowPro" value="0" max="100"></progress><span id="Buy_percent"></span></td>
+                </tr>
+                <tr id = "Buy_stateDiv">
+                    <td><button id="Buy_stateBtn">현재 상태</button></td>
+                    <td><span id="Buy_state"></span></td>
+                </tr>
+            </tbody>
+        </table>
+
         <div id="Buy_selectDiv">
             <div class="Buy_select">
                 <div class="space"></div>
@@ -103,72 +456,56 @@
             </div>
             <div class="Buy_select">
                 <table id="Buy_choose"><tb><tr>
-                        <td><input type="checkbox" name="num" value="1"/> 1</td>
-                        <td><input type="checkbox" name="num" value="2"/> 2</td>
-                        <td><input type="checkbox" name="num" value="3"/> 3</td>
-                        <td><input type="checkbox" name="num" value="4"/> 4</td>
-                        <td><input type="checkbox" name="num" value="5"/> 5</td>
+                        <td><input type="radio" name="num" value="1"/> 1</td>
+                        <td><input type="radio" name="num" value="2"/> 2</td>
+                        <td><input type="radio" name="num" value="3"/> 3</td>
+                        <td><input type="radio" name="num" value="4"/> 4</td>
+                        <td><input type="radio" name="num" value="5"/> 5</td>
                     </tr>
                     <tr>
-                        <td><input type="checkbox" name="num" value="6"/> 6</td>
-                        <td><input type="checkbox" name="num" value="7"/> 7</td>
-                        <td><input type="checkbox" name="num" value="8"/> 8</td>
-                        <td><input type="checkbox" name="num" value="9"/> 9</td>
-                        <td><input type="checkbox" name="num" value="10"/> 10</td>
+                        <td><input type="radio" name="num" value="6"/> 6</td>
+                        <td><input type="radio" name="num" value="7"/> 7</td>
+                        <td><input type="radio" name="num" value="8"/> 8</td>
+                        <td><input type="radio" name="num" value="9"/> 9</td>
+                        <td><input type="radio" name="num" value="10"/> 10</td>
                     </tr>
                     <tr>
-                        <td><input type="checkbox" name="num" value="11"/> 11</td>
-                        <td><input type="checkbox" name="num" value="12"/> 12</td>
-                        <td><input type="checkbox" name="num" value="13"/> 13</td>
-                        <td><input type="checkbox" name="num" value="14"/> 14</td>
-                        <td><input type="checkbox" name="num" value="15"/> 15</td>
+                        <td><input type="radio" name="num" value="11"/> 11</td>
+                        <td><input type="radio" name="num" value="12"/> 12</td>
+                        <td><input type="radio" name="num" value="13"/> 13</td>
+                        <td><input type="radio" name="num" value="14"/> 14</td>
+                        <td><input type="radio" name="num" value="15"/> 15</td>
                     </tr>
                     <tr>
-                        <td><input type="checkbox" name="num" value="16"/> 16</td>
-                        <td><input type="checkbox" name="num" value="17"/> 17</td>
-                        <td><input type="checkbox" name="num" value="18"/> 18</td>
-                        <td><input type="checkbox" name="num" value="19"/> 19</td>
-                        <td><input type="checkbox" name="num" value="20"/> 20</td>
+                        <td><input type="radio" name="num" value="16"/> 16</td>
+                        <td><input type="radio" name="num" value="17"/> 17</td>
+                        <td><input type="radio" name="num" value="18"/> 18</td>
+                        <td><input type="radio" name="num" value="19"/> 19</td>
+                        <td><input type="radio" name="num" value="20"/> 20</td>
                     </tr></tb></table>
-                <input type="button" id="Buy_submit" value="제출하기" onclick="getCheckboxValue()"/><br>
+                <input type="button" id="Buy_submit" value="제출하기"/><br>
                 <script>
-                    function getCheckboxValue(message) {
+                    let userChoice = 0;
+                    function getCheckboxValue() {
                         let mode = "auto";
                         if (document.getElementsByName("mode")[1].checked) mode = "manual";
 
-                        let userChoice = [];
                         if (mode === "manual") {
-                            let obj_length = document.getElementsByName("num").length;
-                            for (let i = 0; i < obj_length; i++) {
-                                let number = document.getElementsByName("num")[i]
+                            for (let i = 0; i < 20; i++) {
+                                let number = document.getElementsByName("num")[i];
                                 if (number.checked) {
-                                    userChoice.push(number.value);
+                                    userChoice = number.value;
+                                    console.log("수동", userChoice);
                                 }
-                            }
-
-                            if (userChoice.length !== 3) {
-                                alert("3개를 골라주세요!");
-                                console.log("현재 선택한 숫자의 수 : ", userChoice.length);
-                            } else {
-                                console.log("수동",userChoice);
                             }
                         }
                         else { //auto일 때
-                            let randomNum;
-                            while(userChoice.length !== 3){
-                                randomNum = Math.floor(Math.random() * 20 + 1)
-                                if (userChoice.indexOf(randomNum) === -1) { // 해당 숫자가 리스트에 없다면
-                                    userChoice.push(randomNum); // 리스트에 숫자 넣기 -> 정렬 기능 추가하고 싶음 userChoice.sort()
-                                }
-                            }
+                            userChoice = Math.floor(Math.random() * 20 + 1)
                             console.log("자동",userChoice);
                         }
+                        return userChoice;
                     }
 
-                    function nowProgress() {
-                        document.getElementById('Buy_nowPro').value = '80';
-                        document.getElementById('Buy_percent').innerHTML = document.getElementById('Buy_nowPro').value+'%';
-                    }
                 </script>
             </div>
         </div>
@@ -182,17 +519,19 @@
             - 당첨시 자동으로 해당 로또 구매 계좌(계정)로 당첨금액이 송금됩니다. <br><br>
         </div>
         <h3>제 1회 이더로또 결과</h3>
+        <button id="Res_checkBtn">확인하기</button>
         <div class="Res_result">
-            <p>당첨 번호<span class="Res_num">#var1  </span><span class="Res_num">#var2  </span><span class="Res_num">#var3  </span></p>
+            <p>당첨 번호<span class="Res_winningNum"></span></p>
             <table id="Res_table">
                 <tr><th>당첨 인원</th><th>총 금액</th><th>인당 당첨 금액</th></tr>
-                <tr id="Res_info"><td>#var4</td><td>#var5</td><td>#var6</td></tr>
-
+                <tr id="Res_info"><td id="Res_getNumWinner">#var4</td><td id="Res_totalAmount">#var5</td><td id="Res_PersonAmount">#var6</td></tr>
             </table>
         </div>
         <div>
-            <p>내 번호 확인하기</p>
-            <div class="Res_result"><span class="Res_num">#var7  </span><span class="Res_num">#var8  </span><span class="Res_num">#var9  </span></div>
+            <h3>내 번호 확인하기</h3>
+            <input placeholder="자신의 address를 입력해주세요"/>
+            <button id="Res_getMyNumBtn">조회하기</button>
+            <div class="Res_result"><span id="Res_MyNum"></span></div>
         </div>
     </div>
 </body>
