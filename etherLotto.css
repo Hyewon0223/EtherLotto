@@ -1,6 +1,11 @@
 /*title_CSS*/
 #title{
-    height : 40px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height : 50px;
     display : flex;
     align-items: center;
     justify-content: center;
@@ -14,7 +19,12 @@
     margin-top : auto;
     border-radius : 5px 5px 0px 0px;
 }
+a:visited{text-decoration: none;}
+a:hover{text-decoration: none;}
 
+#Introduce_screen{
+    margin-top: 70px;
+}
 /*Introduce*/
 .Int_name{
     text-align : center;
@@ -29,8 +39,7 @@
 /*ether_Lotto*/
 #Buy_screen{
     text-align : center;
-    margin-top : 20px;
-
+    margin-top : 90px;
 }
 #Buy_proDiv{
     margin-bottom : 20px;
@@ -54,6 +63,7 @@
 #Res_screen{
     text-align: center;
     margin-top : 20px;
+    margin-bottom : 100px;
 }
 .Res_result{
     background-color: #e5e5e5;

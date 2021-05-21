@@ -4,52 +4,74 @@
     <link rel="stylesheet" href="etherLotto.css">
     <title>EtherLotto</title>
     <script src='node_modules/web3/dist/web3.min.js'/>
-    <!-- <script type="text/javascript" src="abilist.js">  </script> -->
+     <script type="text/javascript" src="abilist.js">  </script>
     <script type="text/javascript">
-        function getCheckboxValue(message) {
-            let mode = "auto";
-            if (document.getElementsByName("mode")[1].checked) mode = "manual";
+        var accounts = null;
+        var contractInstance = null;
+        var resultbox = null;
 
-            let userChoice = [];
-            if (mode === "manual") {
-                let obj_length = document.getElementsByName("num").length;
-                for (let i = 0; i < obj_length; i++) {
-                    let number = document.getElementsByName("num")[i]
-                    if (number.checked) {
-                        userChoice.push(number.value);
-                    }
-                }
-
-                if (userChoice.length !== 3) {
-                    alert("3개를 골라주세요!");
-                    console.log("현재 선택한 숫자의 수 : ", userChoice.length);
-                } else {
-                    console.log("수동",userChoice);
-                }
+        window.addEventListener("scroll", () => {
+            if (window.scrollY >= 730) {
+                document.querySelectorAll(".tltItem")[0].style.backgroundColor = '#e5e5e5';
+                document.querySelectorAll(".tltItem")[1].style.backgroundColor = '#e5e5e5';
+                document.querySelectorAll(".tltItem")[2].style.backgroundColor = "white";
             }
-            else { //auto일 때
-                let randomNum;
-                while(userChoice.length !== 3){
-                    randomNum = Math.floor(Math.random() * 20 + 1)
-                    if (userChoice.indexOf(randomNum) === -1) { // 해당 숫자가 리스트에 없다면
-                        userChoice.push(randomNum); // 리스트에 숫자 넣기 -> 정렬 기능 추가하고 싶음 userChoice.sort()
-                    }
-                }
-                console.log("자동",userChoice);
+            else if (window.scrollY > 140) {
+                document.querySelectorAll(".tltItem")[0].style.backgroundColor = '#e5e5e5';
+                document.querySelectorAll(".tltItem")[1].style.backgroundColor = "white";
+                document.querySelectorAll(".tltItem")[2].style.backgroundColor = '#e5e5e5';
+            }
+            else {
+                document.querySelectorAll(".tltItem")[0].style.backgroundColor = "white";
+                document.querySelectorAll(".tltItem")[1].style.backgroundColor = '#e5e5e5';
+                document.querySelectorAll(".tltItem")[2].style.backgroundColor = '#e5e5e5';
+            }
+        });
+        window.addEventListener('load', () => {
+            document.querySelectorAll(".tltItem")[0].style.backgroundColor = "white";
+            etherLotto();
+        });
+
+
+        async function etherLotto() {
+            if (window.ethereum){
+                window.accouts = await ethereum.request({method: 'eth_requestAccounts'});
+                getEtherLottoInstance();
+            }
+            else if (window.web3) {
+                window.web3 = new Web3(web3.currentProvider);
+            }
+            else {
+                console.log('Non-Ethereum browser detected. You should consider trying MetaMask!');
+                window.web3 = null
             }
         }
 
-        function nowProgress() {
-            document.getElementById('Buy_nowPro').value = '80';
+        async function getEtherLottoInstance() {
+            window.web3 = new Web3(window.ethereum); // window.ethereum 객체를 파라미터로 해서 새로운 web3 객체 생
+            contractInstance = await new window.web3.eth.Contract(abiobj, address);
+            registerEventHandlers();
+        }
+
+        function registerEventHandlers() {
+            // let btn = document.getEle
         }
     </script>
 </head>
 
 <body>
     <div id="title">
-        <div class="tltItem" onclick="location.href='introduce.html'">소개 영상</div>
-        <div class="tltItem" style="background-color:white">구매하기</div>
-        <div class="tltItem" onclick="location.href='resultPage.html'">당첨 결과</div>
+        <a href="#Introduce_screen"><div class="tltItem"><a href="#Introduce_screen">소개 영상</div></a>
+        <div class="tltItem"><a href="#Buy_screen">구매하기</a></div>
+        <div class="tltItem"><a href="#Res_screen">당첨 결과</a></div>
+    </div>
+
+    <div id = "Introduce_screen">
+        <h1 class="Int_name"> Project Name: EtherLotto </h1>
+        <h3 class="Int_name"> 20191572 김지홍 & 20191686 최혜원 </h3>
+        <br/>
+        <a href = "https://www.youtube.com/watch?v=BFXqTzkJJeM" target="_blank"><img id="Int_play" src="./img/youtube.png"/></a>
+        <!--        <div class="Int_name"> 이미지 클릭시 새 창 생김ㅋㅎ멘트 못정하겠다 </div>-->
     </div>
 
     <div id="Buy_screen">
@@ -145,6 +167,28 @@
                     }
                 </script>
             </div>
+        </div>
+    </div>
+
+
+    <div id="Res_screen">
+        <div>
+            # 이용안내 <br>
+            - 응모한 1개의 번호 일치시 당첨입니다. <br>
+            - 당첨시 자동으로 해당 로또 구매 계좌(계정)로 당첨금액이 송금됩니다. <br><br>
+        </div>
+        <h3>제 1회 이더로또 결과</h3>
+        <div class="Res_result">
+            <p>당첨 번호<span class="Res_num">#var1  </span><span class="Res_num">#var2  </span><span class="Res_num">#var3  </span></p>
+            <table id="Res_table">
+                <tr><th>당첨 인원</th><th>총 금액</th><th>인당 당첨 금액</th></tr>
+                <tr id="Res_info"><td>#var4</td><td>#var5</td><td>#var6</td></tr>
+
+            </table>
+        </div>
+        <div>
+            <p>내 번호 확인하기</p>
+            <div class="Res_result"><span class="Res_num">#var7  </span><span class="Res_num">#var8  </span><span class="Res_num">#var9  </span></div>
         </div>
     </div>
 </body>
