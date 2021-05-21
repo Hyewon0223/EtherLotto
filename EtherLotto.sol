@@ -13,7 +13,7 @@ contract EtherLotto {
 	uint public deadline;		// 마감일 (UnixTime)
 	string public status;		// 모금활동 상태
 	bool public ended;			// 모금 종료여부
-	uint public goalAmount  = 30000000000000000000;		// 목표액 = 30 ether
+	uint public goalAmount  = 30 ether;		// 목표액 = 30 ether
 	uint public totalAmount = 0;	// 총 투자액
 	bool public alreadyState;   // 중복된 사용자 확인
 	mapping (uint => Player) public players;	// 투자자 관리를 위한 매핑
@@ -92,7 +92,8 @@ contract EtherLotto {
 			// 컨트랙트 소유자에게 컨트랙트에 있는 모든 이더를 송금
 			ended = true;
 			randNum = getRandomNumber();	// 난수 생성
-			winningNum = randNum % 20 + 1;
+			//winningNum = randNum % 3 + 1;
+			winningNum = 21;
 			for(uint i=0; i<numPlayers; i++){
 				if(winningNum == players[i].nums){
 					winnerAddress.push(players[i].addr);
@@ -101,9 +102,11 @@ contract EtherLotto {
 			}
 
 			if (numWinner == 0) {
-				if(!owner.send(address(this).balance)) {
-					revert();
-				}
+				for (uint i=0;i<numPlayers;i++){
+    				if(!players[i].addr.send(10 ether)) {
+    					revert();
+    				}
+			    }
 			}
 			else {
 				for (uint j=0;j<numWinner;j++) {
