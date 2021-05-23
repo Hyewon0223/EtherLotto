@@ -32,6 +32,7 @@
         var contractInstance = null;
         var resultbox = null;
         let value, numWinner, num, totalAmount, winningNum, numPlayer, userAddress;
+        var ETH = 1000000000000000000;
 
         window.addEventListener('load', etherLotto);
 
@@ -336,7 +337,7 @@
                     "type": "function"
                 }
             ]
-            var address = "0x04cAdDd9eE8EDdc145Ae996A6F526fB76B098297"
+            var address = "0x1a31D1Ba08Aa4245F391D1879f6e69E8C9833fdD";
 
             window.web3 = new Web3(window.ethereum); // window.ethereum 객체를 파라미터로 해서 새로운 web3 객체 생성
             contractInstance = await new window.web3.eth.Contract(abiobj, address);
@@ -368,9 +369,15 @@
         async function showProcess(){
             if (contractInstance != null) {
                  try {
-                     value = await contractInstance.methods["totalAmount"]().call();
-                     document.getElementById('Buy_nowPro').value = value;
-                     document.getElementById('Buy_percent').innerHTML = value + '%';
+                     total_eth = await contractInstance.methods["totalAmount"]().call();
+                     goal_eth = await contractInstance.methods["goalAmount"]().call();
+
+                     var per = parseInt(total_eth)/parseInt(goal_eth) * 100;
+                     if (per >= 100) per = 100;
+
+                     document.getElementById('Buy_nowPro').value = per;
+                     document.getElementById('Buy_percent').innerHTML = per + '%';
+
                  }
                  catch (error) {
                      console.log('[showProcess error]', error)
@@ -400,7 +407,7 @@
                         alert('숫자 한개를 고르거나 자동으로 변경해주세요!');
                     }
                     else {
-                        let value = await contractInstance.methods.purchase(parseInt(num)).send({from:accounts[0], value:200000000000000000}); //0.2 ether
+                        let value = await contractInstance.methods.purchase(num).send({from:accounts[0], value:200000000000000000}); //0.2 ether
                         console.log(value);
                     }
                 }
@@ -423,8 +430,8 @@
                         document.getElementById('Res_existWinner').innerHTML = "응모자는 총 "+numPlayer+"명입니다.";
 
                         document.getElementById('Res_getNumWinner').innerHTML = numWinner + '명';
-                        document.getElementById('Res_totalAmount').innerHTML = totalAmount + ' ether';
-                        document.getElementById('Res_PersonAmount').innerHTML = parseInt(totalAmount)/parseInt(numPlayer)+ ' ether';
+                        document.getElementById('Res_totalAmount').innerHTML = parseInt(totalAmount)/ETH + ' ether';
+                        document.getElementById('Res_PersonAmount').innerHTML = parseInt(totalAmount)/parseInt(numWinner)/ETH+ ' ether';
                     }
                     else if (parseInt(numWinner) === 0){
                         document.getElementById('Res_winningNum').innerHTML = winningNum;
@@ -432,7 +439,7 @@
 
                         document.getElementById('Res_getNumWinner').innerHTML = numPlayer + '명';
                         document.getElementById('Res_totalAmount').innerHTML = totalAmount+ ' ether';
-                        document.getElementById('Res_PersonAmount').innerHTML = (parseInt(totalAmount)/parseInt(numPlayer))+ ' ether';
+                        document.getElementById('Res_PersonAmount').innerHTML = (parseInt(totalAmount)/parseInt(numWinner)/ETH)+ ' ether';
                     }
                     else {
                         document.getElementById('Res_winningNum').innerHTML = "아직 추점하지 않았습니다."
