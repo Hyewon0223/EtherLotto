@@ -140,10 +140,6 @@ contract EtherLotto {
 		selfdestruct(owner);
 	}
 
-	function getBalance() view public returns(uint){
-		return address(this).balance;
-	}
-
 	// 당첨 숫자 뽑기
 	function getRandomNumber() public view returns (uint) {
 		return uint(keccak256(abi.encodePacked(block.timestamp, block.difficulty, numPlayers)));
