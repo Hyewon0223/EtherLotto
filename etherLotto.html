@@ -152,19 +152,6 @@
                 },
                 {
                     "inputs": [],
-                    "name": "getBalance",
-                    "outputs": [
-                        {
-                            "internalType": "uint256",
-                            "name": "",
-                            "type": "uint256"
-                        }
-                    ],
-                    "stateMutability": "view",
-                    "type": "function"
-                },
-                {
-                    "inputs": [],
                     "name": "getRandomNumber",
                     "outputs": [
                         {
@@ -350,7 +337,7 @@
                     "type": "function"
                 }
             ]
-            var address = "0x9228F6D7BD4ACA213D86a3aa8683e06E8fc4dc24";
+            var address = "0x58D647D025c11803Bc67b7A098A401450f74A494"; // 배포할 때마다 변경
 
             window.web3 = new Web3(window.ethereum); // window.ethereum 객체를 파라미터로 해서 새로운 web3 객체 생성
             contractInstance = await new window.web3.eth.Contract(abiobj, address);
@@ -449,9 +436,9 @@
                         document.getElementById('Res_winningNum').innerHTML = winningNum;
                         document.getElementById('Res_existWinner').innerHTML = "당첨자가 없으므로 응모자 모두에게 이더를 돌려드립니다.";
 
-                        document.getElementById('Res_getNumWinner').innerHTML = numPlayer + '명';
-                        document.getElementById('Res_totalAmount').innerHTML = totalAmount+ ' ether';
-                        document.getElementById('Res_PersonAmount').innerHTML = (parseInt(totalAmount)/parseInt(numWinner)/ETH)+ ' ether';
+                        document.getElementById('Res_getNumWinner').innerHTML = '0 명';
+                        document.getElementById('Res_totalAmount').innerHTML = totalAmount/ETH + ' ether';
+                        document.getElementById('Res_PersonAmount').innerHTML = ' 0 ether';
                     }
                     else {
                         document.getElementById('Res_winningNum').innerHTML = "아직 추점하지 않았습니다."
@@ -505,7 +492,7 @@
         <h1 class="Int_name"> Project Name: EtherLotto </h1>
         <h3 class="Int_name"> 20191572 김지홍 & 20191686 최혜원 </h3>
         <br/>
-        <a href = "https://www.youtube.com/watch?v=BFXqTzkJJeM" target="_blank"><img id="Int_play" src="./img/youtube.png"/></a>
+        <a href = "https://youtu.be/S-mKOJ94DqU" target="_blank"><img id="Int_play" src="./img/youtube.png"/></a>
         <!--        <div class="Int_name"> 이미지 클릭시 새 창 생김ㅋㅎ멘트 못정하겠다 </div>-->
     </div>
 
