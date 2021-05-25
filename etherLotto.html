@@ -34,8 +34,6 @@
         let value, numWinner, num, totalAmount, winningNum, numPlayer, userAddress;
         var ETH = 1000000000000000000;
 
-        window.addEventListener('load', etherLotto);
-
         async function etherLotto() {
             if (window.ethereum){
                 window.accounts = await ethereum.request({method: 'eth_requestAccounts'});
@@ -441,7 +439,7 @@
                         document.getElementById('Res_PersonAmount').innerHTML = ' 0 ether';
                     }
                     else {
-                        document.getElementById('Res_winningNum').innerHTML = "아직 추하지 않았습니다."
+                        document.getElementById('Res_winningNum').innerHTML = "아직 추첨하지 않았습니다."
                     }
                 }
                 catch (error) {
